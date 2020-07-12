@@ -6,6 +6,7 @@ import com.greendata.bank.entity.dto.BankDto;
 import com.greendata.bank.entity.mapper.BankMapper;
 import com.greendata.bank.exception.BankNotFoundException;
 import com.greendata.bank.repository.BankRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,17 +66,16 @@ public class BankService {
         );
     }
 
-    public BankDto create(BankRequest request) {
-        final Bank bank = bankRepository.save(bankMapper.toEntity(request));
-        return bankMapper.toDto(bank);
-    }
-
-    public BankDto update(BankRequest request) {
+    public BankDto createOrUpdate(BankRequest request) {
         final Bank bank = bankRepository.save(bankMapper.toEntity(request));
         return bankMapper.toDto(bank);
     }
 
     public void delete(Long id) {
-        bankRepository.deleteById(id);
+        try {
+            bankRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new BankNotFoundException(String.format("Bank with id %d is not found", id));
+        }
     }
 }

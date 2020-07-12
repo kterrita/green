@@ -44,4 +44,13 @@ public class BankDto implements Serializable {
     public void setDeposits(Set<DepositDto> deposits) {
         this.deposits = deposits;
     }
+
+    @Override
+    public String toString() {
+        return "BankDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", bic=" + bic +
+                '}';
+    }
 }

@@ -1,5 +1,6 @@
 package com.greendata.bank.entity.mapper;
 
+import com.greendata.bank.controller.request.ClientRequest;
 import com.greendata.bank.entity.Client;
 import com.greendata.bank.entity.Deposit;
 import com.greendata.bank.entity.dto.ClientDto;
@@ -25,4 +26,15 @@ public class ClientMapper {
         dto.setDeposits(depositDtos);
         return dto;
     }
+
+    public Client toEntity(ClientRequest request) {
+        Client client = new Client();
+        client.setId(request.getId());
+        client.setName(request.getName());
+        client.setShortName(request.getShortName());
+        client.setAddress(request.getAddress());
+        client.setBusinessType(request.getBusinessType());
+        return client;
+    }
+
 }

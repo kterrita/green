@@ -28,7 +28,7 @@ public class Deposit implements Serializable {
     @JoinColumn(name = "bank_id")
     private Bank bank;
 
-    protected Deposit() {
+    public Deposit() {
     }
 
     public Deposit(Instant created, Double interestRate, Short term) {

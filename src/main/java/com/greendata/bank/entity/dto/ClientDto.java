@@ -64,4 +64,15 @@ public class ClientDto implements Serializable {
     public void setDeposits(Set<DepositDto> deposits) {
         this.deposits = deposits;
     }
+
+    @Override
+    public String toString() {
+        return "ClientDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", shortName='" + shortName + '\'' +
+                ", address='" + address + '\'' +
+                ", businessType=" + businessType +
+                '}';
+    }
 }

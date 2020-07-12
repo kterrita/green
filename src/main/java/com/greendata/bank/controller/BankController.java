@@ -2,6 +2,7 @@ package com.greendata.bank.controller;
 
 import com.greendata.bank.controller.request.BankRequest;
 import com.greendata.bank.entity.dto.BankDto;
+import com.greendata.bank.exception.FieldIsNotAllowedForUpdateOperation;
 import com.greendata.bank.exception.IdIsRequiredException;
 import com.greendata.bank.service.BankService;
 import org.springframework.http.HttpStatus;
@@ -58,17 +59,20 @@ public class BankController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BankDto create(@RequestBody @NotNull BankRequest request) {
-        return bankService.create(request);
+        if (request.getId() != null) {
+            throw new FieldIsNotAllowedForUpdateOperation("Id field is not allowed");
+        }
+        return bankService.createOrUpdate(request);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public BankDto update(@RequestBody BankRequest request) {
+    public BankDto update(@RequestBody @NotNull BankRequest request) {
         if (request.getId() == null) {
             throw new IdIsRequiredException();
         }
 
-        return bankService.update(request);
+        return bankService.createOrUpdate(request);
     }
 
     @DeleteMapping

@@ -44,4 +44,14 @@ public class DepositDto implements Serializable {
     public void setTerm(Short term) {
         this.term = term;
     }
+
+    @Override
+    public String toString() {
+        return "DepositDto{" +
+                "id=" + id +
+                ", created=" + created +
+                ", interestRate=" + interestRate +
+                ", term=" + term +
+                '}';
+    }
 }

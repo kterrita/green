@@ -5,5 +5,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class IdIsRequiredException extends RuntimeException {
+    public IdIsRequiredException() {
+    }
 
+    public IdIsRequiredException(String message) {
+        super(message);
+    }
 }

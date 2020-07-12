@@ -1,10 +1,19 @@
 package com.greendata.bank.service;
 
+import com.greendata.bank.controller.request.DepositRequest;
+import com.greendata.bank.entity.Bank;
+import com.greendata.bank.entity.Client;
 import com.greendata.bank.entity.Deposit;
 import com.greendata.bank.entity.dto.DepositDto;
 import com.greendata.bank.entity.mapper.DepositMapper;
 import com.greendata.bank.exception.BankNotFoundException;
+import com.greendata.bank.exception.ClientNotFoundException;
+import com.greendata.bank.exception.DepositNotFoundException;
+import com.greendata.bank.exception.IdIsRequiredException;
+import com.greendata.bank.repository.BankRepository;
+import com.greendata.bank.repository.ClientRepository;
 import com.greendata.bank.repository.DepositRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +26,13 @@ import java.util.stream.Collectors;
 public class DepositService {
     private final DepositMapper depositMapper = new DepositMapper();
     private final DepositRepository depositRepository;
+    private final ClientRepository clientRepository;
+    private final BankRepository bankRepository;
 
-    public DepositService(DepositRepository depositRepository) {
+    public DepositService(DepositRepository depositRepository, ClientRepository clientRepository, BankRepository bankRepository) {
         this.depositRepository = depositRepository;
+        this.clientRepository = clientRepository;
+        this.bankRepository = bankRepository;
     }
 
     public List<DepositDto> getAllDeposits() {
@@ -69,5 +82,27 @@ public class DepositService {
         return deposits.stream()
                 .map(depositMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public DepositDto createOrUpdate(DepositRequest request) {
+        final Long clientId = request.getClientId();
+        final Long bankId = request.getBankId();
+        if (clientId == null || bankId == null) {
+            throw new IdIsRequiredException("Client id or Bank id is not provided.");
+        }
+        final Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ClientNotFoundException(String.format("Client with id %d is not found", clientId)));
+        final Bank bank = bankRepository.findById(bankId)
+                .orElseThrow(() -> new ClientNotFoundException(String.format("Bank with id %d is not found", bankId)));
+        final Deposit deposit = depositRepository.save(depositMapper.toEntity(request, bank, client));
+        return depositMapper.toDto(deposit);
+    }
+
+    public void delete(Long id) {
+        try {
+            depositRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new DepositNotFoundException(String.format("Deposit with id %d is not found", id));
+        }
     }
 }

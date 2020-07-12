@@ -1,11 +1,17 @@
 package com.greendata.bank.service;
 
+import com.greendata.bank.controller.request.BankRequest;
+import com.greendata.bank.controller.request.ClientRequest;
+import com.greendata.bank.entity.Bank;
 import com.greendata.bank.entity.BusinessEntity;
 import com.greendata.bank.entity.Client;
+import com.greendata.bank.entity.dto.BankDto;
 import com.greendata.bank.entity.dto.ClientDto;
 import com.greendata.bank.entity.mapper.ClientMapper;
+import com.greendata.bank.exception.BankNotFoundException;
 import com.greendata.bank.exception.ClientNotFoundException;
 import com.greendata.bank.repository.ClientRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,4 +79,16 @@ public class ClientService {
         );
     }
 
+    public ClientDto createOrUpdate(ClientRequest request) {
+        final Client client = clientRepository.save(clientMapper.toEntity(request));
+        return clientMapper.toDto(client);
+    }
+
+    public void delete(Long id) {
+        try {
+            clientRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ClientNotFoundException(String.format("Client with id %d is not found", id));
+        }
+    }
 }

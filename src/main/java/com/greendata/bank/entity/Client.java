@@ -31,7 +31,7 @@ public class Client implements Serializable {
     )
     private Set<Deposit> deposits = new HashSet<>();
 
-    protected Client() {
+    public Client() {
     }
 
     public Client(String name, String shortName, String address, BusinessEntity businessType) {
