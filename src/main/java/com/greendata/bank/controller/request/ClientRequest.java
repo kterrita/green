@@ -1,11 +1,8 @@
 package com.greendata.bank.controller.request;
 
 import com.greendata.bank.entity.BusinessEntity;
-import com.greendata.bank.entity.dto.DepositDto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 public class ClientRequest implements Serializable {
     private Long id;

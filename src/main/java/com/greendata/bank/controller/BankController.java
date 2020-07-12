@@ -75,13 +75,9 @@ public class BankController {
         return bankService.createOrUpdate(request);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@RequestBody BankRequest request) {
-        if (request.getId() == null) {
-            throw new IdIsRequiredException();
-        }
-
-        bankService.delete(request.getId());
+    public void delete(@PathVariable @NotNull Long id) {
+        bankService.delete(id);
     }
 }

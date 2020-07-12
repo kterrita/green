@@ -85,13 +85,9 @@ public class DepositController {
         return depositService.createOrUpdate(request);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@RequestBody DepositRequest request) {
-        if (request.getId() == null) {
-            throw new IdIsRequiredException();
-        }
-
-        depositService.delete(request.getId());
+    public void delete(@PathVariable @NotNull Long id) {
+        depositService.delete(id);
     }
 }

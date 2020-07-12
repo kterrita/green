@@ -2,6 +2,7 @@ package com.greendata.bank.entity.dto;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class BankDto implements Serializable {
@@ -52,5 +53,21 @@ public class BankDto implements Serializable {
                 ", name='" + name + '\'' +
                 ", bic=" + bic +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BankDto bankDto = (BankDto) o;
+        return id.equals(bankDto.id) &&
+                name.equals(bankDto.name) &&
+                bic.equals(bankDto.bic) &&
+                Objects.equals(deposits, bankDto.deposits);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, bic, deposits);
     }
 }

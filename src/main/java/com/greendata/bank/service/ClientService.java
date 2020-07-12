@@ -1,14 +1,10 @@
 package com.greendata.bank.service;
 
-import com.greendata.bank.controller.request.BankRequest;
 import com.greendata.bank.controller.request.ClientRequest;
-import com.greendata.bank.entity.Bank;
 import com.greendata.bank.entity.BusinessEntity;
 import com.greendata.bank.entity.Client;
-import com.greendata.bank.entity.dto.BankDto;
 import com.greendata.bank.entity.dto.ClientDto;
 import com.greendata.bank.entity.mapper.ClientMapper;
-import com.greendata.bank.exception.BankNotFoundException;
 import com.greendata.bank.exception.ClientNotFoundException;
 import com.greendata.bank.repository.ClientRepository;
 import org.springframework.dao.EmptyResultDataAccessException;

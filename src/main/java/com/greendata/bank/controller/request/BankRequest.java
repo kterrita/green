@@ -1,8 +1,6 @@
 package com.greendata.bank.controller.request;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 public class BankRequest implements Serializable {
     private Long id;
@@ -10,6 +8,12 @@ public class BankRequest implements Serializable {
     private Long bic;
 
     public BankRequest() {
+    }
+
+    public BankRequest(Long id, String name, Long bic) {
+        this.id = id;
+        this.name = name;
+        this.bic = bic;
     }
 
     public Long getId() {

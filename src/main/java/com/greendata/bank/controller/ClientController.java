@@ -81,13 +81,9 @@ public class ClientController {
         return clientService.createOrUpdate(request);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@RequestBody ClientRequest request) {
-        if (request.getId() == null) {
-            throw new IdIsRequiredException();
-        }
-
-        clientService.delete(request.getId());
+    public void delete(@PathVariable @NotNull Long id) {
+        clientService.delete(id);
     }
 }
