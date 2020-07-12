@@ -15,12 +15,6 @@ import java.util.Optional;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
-    List<Client> findAllByOrderByNameAsc();
-
-    List<Client> findAllByOrderByBusinessTypeAsc();
-
-    List<Client> findAllByOrderByIdAsc();
-
     List<Client> findAllByNameContains(String pattern);
 
     List<Client> findAllByBusinessType(BusinessEntity type);

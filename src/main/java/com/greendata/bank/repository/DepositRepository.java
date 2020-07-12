@@ -14,14 +14,6 @@ import java.util.List;
 @Repository
 public interface DepositRepository extends JpaRepository<Deposit, Long> {
 
-    List<Deposit> findAllByOrderByCreatedAsc();
-
-    List<Deposit> findAllByOrderByCreatedDesc();
-
-    List<Deposit> findAllByOrderByInterestRateAsc();
-
-    List<Deposit> findAllByOrderByTermAsc();
-
     List<Deposit> findAllByCreatedIsBeforeOrderByCreatedAsc(Instant time);
 
     List<Deposit> findAllByCreatedIsAfterOrderByCreatedAsc(Instant time);

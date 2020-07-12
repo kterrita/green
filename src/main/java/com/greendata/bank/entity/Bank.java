@@ -28,7 +28,7 @@ public class Bank implements Serializable {
     )
     private Set<Deposit> deposits = new HashSet<>();
 
-    protected Bank() {
+    public Bank() {
     }
 
     public Bank(String name, Long bic) {
